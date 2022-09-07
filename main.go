@@ -1,6 +1,4 @@
-package mainb
-
-import (
+package main import (
 	"encoding/json"
 	"log"
 	"net/http"
@@ -66,6 +64,18 @@ func PutNoteHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	k := vars["id"]
 	var noteUpdate Note
+	err := json.NewDecoder(r.Body).Decode(&noteUpdate)
+	if err != nil {
+		panic(nil)
+	}
+	if note, ok := noteStore[k]; ok {
+		noteUpdate.CreatedAt = note.CreatedAt
+		delete(noteStore, k)
+		noteStore[k] = noteUpdate
+	} else {
+		log.Printf("No enontramos el id %s", k)
+	}
+	w.WriteHeader(http.StatusNoContent)
 
 }
 
@@ -76,13 +86,13 @@ func main() {
 	r.HandleFunc("/api/notes", GetNoteHandler).Methods("GET")
 	r.HandleFunc("/api/notes", PostNoteHandler).Methods("POST")
 	r.HandleFunc("/api/notes{id}", PutNoteHandler).Methods("PUT")
-	r.HandleFunc("/api/notes{id}", DeleteNoteHandler).Methods("DELETE")
+	//r.HandleFunc("/api/notes{id}", DeleteNoteHandler).Methods("DELETE")
 	server := &http.Server{
 		Addr:           ":8080",
 		Handler:        r,
 		ReadTimeout:    10 * time.Second,
 		WriteTimeout:   10 * time.Second,
-		MaxHEaderBytes: 1 << 20,
+		MaxHeaderBytes: 1 << 20,
 	}
 	log.Println("Listening at 8080 ...")
 	server.ListenAndServe()
