@@ -1,4 +1,6 @@
-package main import (
+package main
+
+import (
 	"encoding/json"
 	"log"
 	"net/http"
