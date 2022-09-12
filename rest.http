@@ -1,8 +1,51 @@
-POST http://localhost:8080/api/notes
+###
+
+POST http://localhost:8080/api/notes HTTP/1.1
 Content-Type: application/json
+
 {
   "Title":"Titulo 1",
   "Description":"Description 1"
 }
+
+###
+
+POST http://localhost:8080/api/notes HTTP/1.1
+Content-Type: application/json
+
+{
+  "Title":"Titulo 11",
+  "Description":"Description 11"
+}
+
+###
+
+POST http://localhost:8080/api/notes
+Content-Type: application/json
+
+{
+  "Title":"Titulo 111",
+  "Description":"Description 111"
+}
+
+###
+
+GET http://localhost:8080/api/notes
+Content-Type: application/json
+
+###
+
+PUT http://localhost:8080/api/notes2
+Content-Type: application/json
+
+{
+  "title":"Modificado XXX",
+  "description":"Description XXX"
+}
+
+###
+
+DELETE http://localhost:8080/api/notes1
+Content-Type: application/json
 
 
